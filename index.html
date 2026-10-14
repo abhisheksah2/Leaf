@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Leaf Disease Demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Leaf Disease demo</h1>
+    <p class="small">
+      Select a sample leaf or upload your own photo. This demo uses simple
+      color/texture heuristics to give a sample prediction (not a real
+      diagnostic).
+    </p>
+
+    <div class="controls">
+      <label class="card small"
+        >Choose sample:
+        <select id="sampleSelect">
+          <option value="">-- pick a sample --</option>
+          <option
+            value="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Apple_scab_on_leaf.jpg/1024px-Apple_scab_on_leaf.jpg"
+          >
+            Apple leaf (spots)
+          </option>
+          <option
+            value="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Healthy_leaf_%28cropped%29.jpg/1024px-Healthy_leaf_%28cropped%29.jpg"
+          >
+            Healthy leaf
+          </option>
+          <option
+            value="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Powdery_mildew_on_rose_leaf.jpg/1024px-Powdery_mildew_on_rose_leaf.jpg"
+          >
+            Powdery mildew (white)
+          </option>
+        </select>
+      </label>
+
+      <label class="card small"
+        >Or upload:
+        <input type="file" id="fileInput" accept="image/*" />
+      </label>
+
+      <button id="analyzeBtn" class="card small">Analyze</button>
+      <button id="resetBtn" class="card small">Reset</button>
+    </div>
+
+    <div class="preview">
+      <div class="card" style="min-width: 400px">
+        <div style="display: flex; gap: 12px">
+          <div>
+            <img id="imagePreview" alt="Image preview" src="" />
+            <div id="meta" class="small"></div>
+          </div>
+          <div style="flex: 1">
+            <div id="result">No analysis yet</div>
+            <div id="explanation" class="small" style="margin-top: 8px"></div>
+
+            <div style="margin-top: 12px">
+              <div class="small">Confidence</div>
+              <div class="bar"><div id="confBar" class="bar-inner"></div></div>
+            </div>
+
+            <div style="margin-top: 14px">
+              <details>
+                <summary class="small">How this demo works (click)</summary>
+                <p class="small">
+                  The page draws the image to a hidden canvas and inspects pixel
+                  colors to detect white powder, brown spots, yellowing, or
+                  healthy green. It returns a sample label and a rough
+                  confidence. This is a demo only — replace heuristics with a
+                  trained model for real use.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card small" style="width: 220px">
+        <strong>Tips</strong>
+        <ul>
+          <li>Use clear, focused photos.</li>
+          <li>Prefer a single leaf occupying most of the frame.</li>
+          <li>
+            Upload local images for best results (remote images may be blocked
+            by CORS).
+          </li>
+        </ul>
+        <canvas
+          id="hiddenCanvas"
+          width="224"
+          height="224"
+          style="display: none"
+        ></canvas>
+        <div style="margin-top: 12px">
+          <button id="downloadReport" class="small">
+            Download report (JSON)
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
